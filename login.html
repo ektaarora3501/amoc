@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>
+login page
+</title>
+<style>
+        table{
+            margin-bottom: auto;
+            margin-right: auto;
+            margin-left: auto;
+        }
+       .invalid-feedback{
+         border-color:#ff3346;
+         color:#ff3346;
+        }
+
+       .invalid{
+        border-color:#ff3346;
+       }
+       
+      </style>    
+<body>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+{% if error %}
+         <div class="alert alert-danger">
+         <p ><strong>Error:</strong> {{ error }}
+         </div>
+      {% endif %}
+<br><br><br>
+
+<form action="" method="POST">
+{{form.hidden_tag()}}
+  <table>
+    <br><br>
+     <tr>
+       <td>
+         {{ form.username.label(class_="form control-label")}}
+             <br>
+            {% if form.username.errors %}
+              {{ form.username(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.username.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+                
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.username(class="valid")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>  
+      <tr>
+       <td>
+         {{ form.password.label(class_="form-control-label")}}
+            <br>
+            {% if form.password.errors %}
+              {{ form.password(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.password.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+                </div>
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.password(class="true-feedback")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>
+   <tr>
+       <td>
+         {{ form.email.label(class_="form-control-label")}}
+            <br>
+            {% if form.email.errors %}
+              {{ form.email(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.email.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.email(class="true-feedback")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>
+
+
+  
+   <tr>
+     <td>
+         {{form.submit}}
+      </td>
+    </tr>
+  </table>
+ </form>
+</head>
+</html>

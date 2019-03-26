@@ -1,0 +1,113 @@
+ <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title>INFORMATION SITE...</title>
+    <style>
+        table{
+            margin-bottom: 2%;
+            margin-right: 80%;
+            margin-left: auto;
+        }
+        
+      .message_holder{
+            margin-bottom: 20%;
+            margin-right: 60%;
+            margin-left: auto;
+            
+            font-size:16px;
+        }
+        
+       .header{
+          
+          height:50px;
+        }
+        
+       .bulletin{
+          height:100%;
+          margin-left:60%;
+       
+       }
+       .container{
+       
+          background-color:#002147;
+          height:50px;
+        }
+        marquee{
+          color:red;
+          size:10px;
+        }
+       
+       
+      </style>
+  </head>
+  <body >
+  <div class='container'></div> 
+   <div class='header'>
+   <div class='bulletin'>
+   this is the bulletin board
+   <br>
+    <marquee behaviour='scroll' direction='up'>
+    <br><br>
+    1.comapany completes 25 anniversary this year  
+    <br><br>
+    2. this year batch 00897 completed..
+    <br><br>
+    3.foreign consultants visiting branch chem12 this friday
+    </marquee>
+    
+    <br><br><br><br><br>
+    <font style="color:blue">
+    We believe in your safety ...we are here at Zuerst Idee
+    </font>
+    </div>
+    
+   
+   <div class="message_holder"><b><font style='font-size :25px;color: #071aa2;'>Messages:</font></b></div>
+    <h3 style='color: #bfbfbf;font-size:30px;'>No message yet..</h3>
+    
+  <table>
+     <tr>
+    <form action="" method="POST">
+      <td>
+      <input type="text" class="message" placeholder="Messages">
+     </td>
+      </tr>
+     <tr>
+      <td>
+      <input type="submit">
+      </td>
+    </tr>
+    </form>
+</table>
+</div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+      socket.on( 'connect', function() {
+        socket.emit( 'my event', {
+          data: 'User Connected'
+        } )
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault()
+          let user_name = '{{username}}'
+          let user_input = $( 'input.message' ).val()
+          socket.emit( 'my event', {
+            user_name : user_name,
+            message : user_input
+          } )
+          $( 'input.message' ).val( '' ).focus()
+        } )
+      } )
+      socket.on( 'my response', function( msg ) {
+        console.log( msg )
+        if( typeof msg.user_name !== 'undefined' ) {
+          $( 'h3' ).remove()
+          $( 'div.message_holder' ).append( '<div class="sh"><b style="color:#9457eb">'+msg.user_name+'</b> '+msg.message+'</div>' )
+        }
+      })
+    </script>
+
+  </body>
+</html>

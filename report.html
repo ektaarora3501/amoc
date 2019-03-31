@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>
+   report
+</title>
+</head>
+<style>
+
+.header{
+          
+          height:50px;
+        }
+        
+       .bulletin{
+          height:100%;
+          margin-left:60%;
+       
+       }
+       .container{
+       
+          background-color:#002147;
+          height:50px;
+        }
+
+    p{
+         margin-left:10%;
+         margin-bottom:auto;
+
+      }
+       
+</style>
+<body>
+
+<div class='container'></div> 
+<div class='header'>
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}
+
+
+  
+<table>
+
+<td></td><td></td>    
+   {% set users = ucode.query.all()  %} 
+        <tr>
+      
+       {% for user in users %}
+          <p>
+          {{ user.user_name }}
+           ::::
+          {{ user.message }}
+         </p>
+          <br>  
+       {% endfor %}
+    
+   
+</form>
+</table>
+</body>
+</html>

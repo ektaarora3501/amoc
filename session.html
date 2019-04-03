@@ -1,6 +1,7 @@
  <!DOCTYPE html>
   <html lang="en">
   <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INFORMATION SITE...</title>
     <style>
         table{
@@ -36,35 +37,113 @@
           color:red;
           size:10px;
         }
+
+ 
+
+ default-size
+   {
+    padding:20px;
+    font-size:10px;
+}
+  @media(min-width:700px){
+  
+ default-size{
+   font-size:30px;
+  }
+}
        
+@media(max-width:768px){
+  default-size{
+   font-size:70px;
+ 
+  }
+}
+ 
        
+       /* For mobile phones: */ 
+@media only screen and (min-width: 500px)
+      {
+        .col-1 {width: 8.33%;}
+	.col-2 {width: 16.66%;}
+	.col-3 {width: 25%;}
+	.col-4 {width: 33.33%;}
+	.col-5 {width: 41.66%;}
+	.col-6 {width: 50%;}
+	.col-7 {width: 58.33%;}
+	.col-8 {width: 66.66%;}
+	.col-9 {width: 75%;}
+	.col-10 {width: 83.33%;}
+	.col-11 {width: 91.66%;}
+	.col-12 {width: 100%;}
+      }
+
+
+/*for desktop*/
+@media only screen and (max-width: 600px)
+      {
+        .col-1 {width: 8.33%;}
+	.col-2 {width: 16.66%;}
+	.col-3 {width: 25%;}
+	.col-4 {width: 33.33%;}
+	.col-5 {width: 41.66%;}
+	.col-6 {width: 50%;}
+	.col-7 {width: 58.33%;}
+	.col-8 {width: 66.66%;}
+	.col-9 {width: 75%;}
+	.col-10 {width: 83.33%;}
+	.col-11 {width: 91.66%;}
+	.col-12 {width: 100%;}
+      }
+
+  [class*="col-"] {
+    width: 100%;
+    font-size:16px;
+  }
+  
+}
+
+    .row::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+  }
+
+
+
       </style>
   </head>
   <body >
-  <div class='container'></div> 
+  
+  <div class='container'></div>
+   <div class='row'> 
    <div class='header'>
    <div class='bulletin'>
-   this is the bulletin board
+  this is the bulletin board
    <br>
     <marquee behaviour='scroll' direction='up'>
     <br><br>
-    1.comapany completes 25 anniversary this year  
-    <br><br>
-    2. this year batch 00897 completed..
-    <br><br>
-    3.foreign consultants visiting branch chem12 this friday
+     Bulletin Board
     </marquee>
     
     <br><br><br><br><br>
     <font style="color:blue">
-    We believe in your safety ...we are here at Zuerst Idee
+     Zuerst Idee
     </font>
     </div>
     
-   
+    <div class='col-7'>
    <div class="message_holder"><b><font style='font-size :25px;color: #071aa2;'>Messages:</font></b></div>
     <h3 style='color: #bfbfbf;font-size:30px;'>No message yet..</h3>
     
+
+
+
+
   <table>
      <tr>
     <form action="" method="POST">
@@ -76,9 +155,13 @@
       <td>
       <input type="submit">
       </td>
+      <td>
+      <a href="http://127.0.0.1:5000/logout/{{username}}">logout</a> 
+      </td>
     </tr>
     </form>
 </table>
+</div>
 </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

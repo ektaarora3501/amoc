@@ -19,45 +19,78 @@
        .container{
        
           background-color:#002147;
-          height:50px;
+          height:70px;
+          width:100%;
+          color:white;
+          text-align:center;
+          font-size:50px;
         }
 
-    p{
-         margin-left:10%;
-         margin-bottom:auto;
+     .tab1{
+             margin-left:9%;
+             color:#002147;
+             width:90%;
+            font-size:35px;
+         }
 
-      }
-       
+     .name{
+             margin-left:5%;
+             font-size:20px;
+             margin-bottom:5%;
+             
+          }
+     
+      .mess{
+             margin-left:30%;
+             font-size:20px;
+              margin-top:auto;
+               
+          }
+         
+        .date{
+
+              margin-left:65%;
+              font-size:20px;   
+          }
+
+       .tab2{
+             width:95%;
+             margin-left:16%;
+             font-size:20px;
+             
+           }
+      
+
 </style>
 <body>
 
-<div class='container'></div> 
+<div class='container'>ZUERST IDEE</div> 
 <div class='header'>
-
-{% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-{% endblock %}
-
-
-  
-<table>
-
-<td></td><td></td>    
-   {% set users = ucode.query.all()  %} 
-        <tr>
-      
-       {% for user in users %}
-          <p>
-          {{ user.user_name }}
-           ::::
-          {{ user.message }}
-         </p>
-          <br>  
+<table class ="tab1">
+<tr>
+<td></td>
+<td> username</td>
+<td > message</td>
+<td >date time</td>
+</tr>
+</table>
+</div>
+  <table class="tab2">
+   {% set users = ucodein.query.all()  %} 
+        {% for user in users %}
+          <tr>
+           <td>  
+           {{ user.user_name }}
+          </td><td></td><td>          </td><td></td><td>          </td><td></td><td>          </td><td></td><td>
+              {{ user.message }}
+            </td>
+          <td>
+            {{ user.date }}
+          </td>
+          </tr>
+          
        {% endfor %}
-    
    
-</form>
 </table>
 </body>
 </html>

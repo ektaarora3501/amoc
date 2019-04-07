@@ -24,13 +24,13 @@ class database(db.Model):
      def __repr__(self):
           return f"database('{self.user_name}','{self.email}')"
 
-class ucodein(db.Model):
+class user_code(db.Model):
      id=db.Column(db.Integer,primary_key=True)
      user_name=db.Column(db.String(20),nullable=False)
      message=db.Column(db.String(100),nullable=False)
      date=db.Column(db.String,nullable=False)
      def __repr__(self):
-          return f"ucodein('{self.user_name}','{self.message}','{self.date}')"
+          return f"user_code('{self.user_name}','{self.message}','{self.date}')"
 
 
 class log2(db.Model):
@@ -54,15 +54,14 @@ def sessions(username):
       u2=log2.query.filter_by(user_name=username).first()
       print(u2)
       if(u2 is None):
-           error='you are not logged in '     
            return redirect(url_for('login'))
       
       elif(username=='zuerst'):     
-          return render_template('admin.html',username=username,ucodein=ucodein) 
-          return render_template('report.html',username=username,ucodein=ucodein) 
+          return render_template('admin.html',username=username,user_code=user_code,log2=log2) 
+          return render_template('report.html',username=username,user_code=user_code) 
       else:
-        return render_template('session.html',username=username)
-        render_template('report.html',username=username,ucodein=ucodein)   
+        return render_template('session.html',username=username,log2=log2)
+        return render_template('report.html',username=username,user_code=user_code)   
 
 @app.route("/logged/server")
 def admin():
@@ -86,16 +85,13 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     socketio.emit('my response', json, callback=messageReceived)
     if(un!='default'):
         if(mess!='default'):
-            us=ucodein(user_name=un,message=mess,date=dt)
+            us=user_code(user_name=un,message=mess,date=dt)
             db.session.add(us)
             db.session.commit()    
       
-    
-
-
 @app.route("/report")
 def report():
-    return render_template('report.html',ucodein=ucodein)
+    return render_template('report.html',user_code=user_code)
 
 
 @app.route("/login",methods=['GET','POST'])
@@ -123,11 +119,15 @@ def login():
       elif(u2.email==mail):
             if(u2.password==pw):
                    u=log2(user_name=u2.user_name)
-                   db.session.add(u)
-                   db.session.commit()
-                   print(log2.query.all())
-                   return redirect(url_for('sessions',username=user))
-            
+                   try:
+                       db.session.add(u)
+                       db.session.commit()
+                       print(log2.query.all())
+                       return redirect(url_for('sessions',username=user))
+                   
+                   except (InvalidRequestError,IntegrityError):
+                       return redirect(url_for('sessions',username=user)) 
+
       error='invalid login'
       return render_template('login.html',form=form,error=error)   
    return render_template('login.html',form=form)

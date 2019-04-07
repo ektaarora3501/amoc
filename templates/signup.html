@@ -1,0 +1,228 @@
+
+<html>
+<head>
+<title>
+Sign up page
+</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+<style>
+       table{
+            margin-bottom: 5%;
+            margin-right: 10%;
+            margin-left: 65%;
+            background-color:white;
+            
+        }
+
+       .invalid-feedback{
+         border-color:#ff3346;
+         color:#ff3346;
+        }
+
+       .invalid{
+        border-color:#ff3346;
+       }
+       
+       .container{
+       
+          background-color:#002147;
+          height:70px;
+          width:100%;
+          color:white;
+          text-align:center;
+          font-size:50px;
+        }
+
+          
+      .error{
+          height:40px;
+          width:50%;
+          margin-top:2%;
+          font-size:20px;
+          margin-right:10%;
+          margin-left:50%;
+       }
+
+       .button{
+          background-color:#2ceef0;
+          color:#041f60;
+          height:40px;
+          width:80px;
+          font-size:20px;
+ 
+         }
+
+
+	input[type=submit]
+	{
+           background-color: #0070d2;
+	   padding:10px px;
+	   font-size:20px;
+           color: white;
+    
+	}
+      .top{
+       
+          background-color:#002147;
+          height:70px;
+          width:100%;
+          color:white;
+          text-align:center;
+          font-size:50px;  
+        }
+
+     font
+        {
+           color:#2a5897;
+           font-size:2vw;
+      }
+
+     img{
+
+       height:300px;
+       width:300px;
+       float:left;
+       margin-top:5%;
+       margin-left:15%;
+       }
+
+</style>    
+</head>
+<body background="{{url_for('static', filename='index.jpeg')}}" >
+<div class="top">	
+ZUERST IDEE	
+</font>
+<br><br><br><br>
+</div>
+{% if error %}
+          <div class='error'>
+         <div class="alert alert-danger">
+         <p ><strong>Error:</strong> {{ error }}
+         </div>
+         </div>
+      {% endif %}
+
+<form action="" method="POST">  
+{{form.hidden_tag()}}
+   <img src="{{url_for('static', filename='signup.png')}}">
+  <table>
+  <br><br>
+     <tr>
+       <td >
+	<font>
+         {{ form.username.label(class_="form-control-label")}}
+            {% if form.username.errors %}
+              {{ form.username(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.username.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+            </div>
+	</font>
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.username(class="valid")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>
+ <tr>
+       <td>
+	<font>
+         {{ form.password.label(class_="form-control-label")}}
+           <br>
+            {% if form.password.errors %}
+              {{ form.password(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.password.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+              </div>
+	</font>
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.password(class="valid")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>
+   <tr>
+       <td>
+	<font>
+         {{ form.cnf_pass.label(class_="form-control-label")}}
+           <br>
+            {% if form.cnf_pass.errors %}
+              {{ form.cnf_pass(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.cnf_pass.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+        </div>
+	</font>
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.cnf_pass(class="valid")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>
+   <tr>
+       <td>
+	<font >
+         {{ form.email.label(class_="form-control-label")}}
+           <br>
+            {% if form.email.errors %}
+              {{ form.email(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.email.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+         </div>
+	</font>
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.email(class="valid")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>
+
+
+
+<tr>
+   <td>
+     {{form.submit}}
+    </div>
+   </td>
+</tr>
+ </table>
+</form>
+
+</body>
+</html>

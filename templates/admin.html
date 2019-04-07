@@ -1,0 +1,134 @@
+ <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFORMATION SITE...</title>
+    <style>
+        table{
+            margin-bottom: 2%;
+            margin-right: 70%;
+            margin-left: 10%;
+        }
+        
+      .message_holder{
+            margin-bottom: 20%;
+            margin-right: 70%;
+            margin-left: 10%;       
+            font-size:18px;
+            background-color:white;
+        }
+        
+       .header{
+          
+          height:50px;
+        }
+        
+       .bulletin{
+          height:100%;
+          margin-left:60%;
+          font-size:20px;
+       }
+       
+ 
+      .top{
+       
+          background-color:#002147;
+          height:70px;          
+          color:white;
+          text-align:center;
+          font-size:50px;
+        }
+   
+    .col{
+          background-color:white;
+        }
+
+      </style>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  </head>
+ 
+ <body background="{{url_for('static', filename='index.jpeg')}}" >
+
+
+ <link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap-responsive.css">
+<nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
+  
+  <div class="top">ZUERST IDEE</div></nav>
+ 
+   <div class='row'> 
+   <div class='header'>
+   <div class='bulletin'>
+    <br> <br>
+   <font style="color:#499DF5;">Currently login users</font>
+   <br>
+  
+    {% set users = log2.query.all()  %} 
+        {% for user in users %}
+        {{ user.user_name }}
+          <br>
+       {% endfor %}
+   
+     </div>
+    
+    <div class='col'>
+   <div class="message_holder"><b><font style='font-size :40px;color: #000c66;margin-left:10%;'>Messages:</font></b></div>
+    <h3 style='color: #bfbfbf;font-size:30px;margin-left:10%;'>No message yet..</h3>
+    
+
+
+  <table>
+     <tr>
+    <form action="" method="POST">
+      <td>
+      <input type="text" class="message" placeholder="Messages">
+     </td>
+      </tr>
+     <tr>
+      <td>
+      <input type="submit">
+      </td>
+      <td>
+      <a href="http://127.0.0.1:5000/logout/{{username}}">logout</a>
+      <a href="http://127.0.0.1:5000/report">report</a>   
+      </td>
+    </tr>
+    </form>
+</table>
+</div>
+</div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+      socket.on( 'connect', function() {
+        socket.emit( 'my event', {
+          data: 'User Connected'
+        } )
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault()
+          let user_name = '{{username}}'
+          let user_input = $( 'input.message' ).val()
+          socket.emit( 'my event', {
+            user_name : user_name,
+            message : user_input
+          } )
+          $( 'input.message' ).val( '' ).focus()
+        } )
+      } )
+      socket.on( 'my response', function( msg ) {
+        console.log( msg )
+        if( typeof msg.user_name !== 'undefined' ) {
+          $( 'h3' ).remove()
+          $( 'div.message_holder' ).append( '<div class="sh"><b style="color:#9457eb">'+msg.user_name+'</b> '+msg.message+'</div>' )
+        }
+      })
+    </script>
+
+  </body>
+</html>

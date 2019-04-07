@@ -1,0 +1,234 @@
+<html>
+<head>
+<title>
+login page
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<style>
+        table{
+            margin-bottom: auto;
+            margin-right: 10%;
+            margin-left: 65%;
+            background-color:white;
+        }
+
+       .invalid-feedback{
+         border-color:#ff3346;
+         color:#ff3346;
+        }
+
+       .invalid{
+        border-color:#ff3346;
+       }
+       
+       .container{
+       
+          background-color:#002147;
+          height:70px;
+          width:100%;
+          color:white;
+          text-align:center;
+          font-size:50px;
+        }
+
+          
+      .error{
+          height:30px;
+          width:20%;
+          margin:auto;
+       }
+
+	input[type=submit]
+	{
+           background-color: #0070d2;
+	   padding:10px px;
+	   font-size:20px;
+           color: white;
+    
+	}
+      .top{
+       
+          background-color:#002147;
+          height:70px;
+          width:100%;
+          color:white;
+          text-align:center;
+          font-size:50px;  
+        }
+
+     font
+        {
+           color:#2a5897;
+           font-size:2vw;
+      }
+
+     img{
+
+       height:500px;
+       width:700px;
+       float:left;
+       margin-top:5%;
+       margin-left:5%;
+       }
+@media screen and (max-width: 786px) {
+    
+  
+
+   .top{
+       
+          background-color:#002147;
+          height:50px;
+          width:100%;
+          color:white;
+          text-align:center;
+          font-size:40px;  
+        }
+
+    table{
+            margin-bottom: auto;
+            margin-right: 10%;
+            margin-left: 20%;
+            margin-top:0%;
+        }
+
+
+   .invalid-feedback{
+         border-color:#ff3346;
+         color:#ff3346;
+         font-size:15px;
+        }
+
+   .error{
+          height:30px;
+          width:70%;
+          margin-top:auto;
+       }
+
+    font
+        {
+           color:#2a5897;
+           font-size:16px;
+      }
+
+    img{
+        height:0px;
+        width:0px;
+      }
+ 
+}
+       
+      </style>  
+</head>  
+<body background="{{url_for('static', filename='index.jpeg')}}" >
+
+<div class="top">	
+ZUERST IDEE	
+</font>
+<br><br><br><br>
+</div>
+{% if error %}
+          <div class='error'>
+         <div class="alert alert-danger">
+         <p ><strong>Error:</strong> {{ error }}
+         </div>
+         </div>
+      {% endif %}
+
+<form action="" method="POST">  
+{{form.hidden_tag()}}
+   <img src="{{url_for('static', filename='login.png')}}">
+
+  <table>
+    <br><br>
+     <tr>
+       <td>
+	<font >
+         {{ form.username.label(class_="form-control-label")}}
+             <br>
+            {% if form.username.errors %}
+              {{ form.username(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.username.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+              </div>
+              </font>
+               
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.username(class="valid")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>  
+      <tr>
+       <td>
+	<font >
+         {{ form.password.label(class_="form-control-label")}}
+            <br>
+            {% if form.password.errors %}
+              {{ form.password(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.password.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+                </div>
+	</font>
+                </td>
+                </tr>
+                <td>
+	<font>
+              {% else %}
+                <div class="true-feedback">
+            {{ form.password(class="true-feedback")}}
+            {% endif %}
+            </div>
+	</font>
+       </td>
+   </tr>
+   <tr>
+       <td>
+	<font >
+         {{ form.email.label(class_="form-control-label")}}
+            <br>
+            {% if form.email.errors %}
+              {{ form.email(class="invalid" )}}
+                <div class="invalid-feedback">
+                {% for errors in form.email.errors %}
+                <span>{{ errors }}</span>
+                {% endfor %}
+              </div>
+	</font>
+
+                </td>
+                </tr>
+                <td>
+
+              {% else %}
+                <div class="true-feedback">
+            {{ form.email(class="true-feedback")}}
+            {% endif %}
+            </div>
+       </td>
+   </tr>
+   <tr>
+     <td><br>
+         {{form.submit}}
+      </td>
+    </tr>
+  </table>
+ </form>
+</head>
+</html>

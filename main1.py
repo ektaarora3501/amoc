@@ -1,19 +1,34 @@
 from flask import Flask,render_template,redirect,url_for,get_flashed_messages,request,flash,session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError,InvalidRequestError
+from flask_login import LoginManager,UserMixin,login_required,login_user,logout_user
 from flask_socketio import SocketIO
 from form import Regis_form,login_form
 from datetime import datetime
+from flask_mail import Mail,Message
+
+
 
 app=Flask(__name__)
+
+
 
 socketio = SocketIO(app)
 
 app.config['SECRET_KEY']="b0fc8e666068108a7254175f001919e1"
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///data_new.db'
 
-db=SQLAlchemy(app)
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT']=465
+app.config['MAIL_USERNAME']="**********@gmail.com"
+app.config['MAIL_PASSWORD']="*********"
+app.config['MAIL_USE_TSL']=False
+app.config['MAIL_USE_SSL']=True
 
+mail=Mail(app)
+
+db=SQLAlchemy(app)
+login=LoginManager(app)
      
 class database(db.Model):
      id=db.Column(db.Integer,primary_key=True)
@@ -38,6 +53,11 @@ class log2(db.Model):
      user_name=db.Column(db.String(20),unique=True,nullable=False)
      def __repr__(self):
           return f"log2('{self.user_name}')"
+
+
+@login.user_loader
+def load_user(id):
+    return log2.query.get(int(id))
 
 
 
@@ -144,12 +164,18 @@ def logout(username):
       return redirect(url_for('login'))
 
 
+@app.route("/verification/<email>")
+def verification(email):
+      msg = Message('Hello', sender = '***********@gmail.com', recipients = [email])
+      msg.body='hey there... please click on the link below to verify your mail \n http://127.0.0.1:5000/success/email'
+      mail.send(msg)
+      return "a veification mail is sent to %s ... please verify your account" %email
 
 
-@app.route("/success/<username>")
-def success(username):
+@app.route("/success/<email>")
+def success(email):
    
-   return render_template('success.html',username=username)
+   return render_template('success.html',email=email)
 
 @app.route("/signup",methods=['GET','POST'])
 def signup():
@@ -167,6 +193,7 @@ def signup():
            db.session.rollback()
            return render_template('signup.html',form=form,error=error)        
                       
+         return redirect(url_for('verification',email=e2))
          return redirect(url_for('success',username=username)) 
 
    return render_template('signup.html',form=form)
